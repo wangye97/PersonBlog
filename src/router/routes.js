@@ -13,17 +13,16 @@ export default [
         path:'/login',
         component:()=>import('@/pages/Login'),
         meta:{head:false,title:'登录'},
-        beforeEnter(to,from,next){
-            if(from.path=='/'){
-                next()
-            }
-            if(sessionStorage.getItem('isLogin')==1){
-                next(false)
-            }else{
-                next()
-            }
-            
-        }
+        // beforeEnter(to,from,next){
+        //     if(from.path=='/'){
+        //         next()
+        //     }
+        //     if(sessionStorage.getItem('isLogin')==1){
+        //         next(false)
+        //     }else{
+        //         next()
+        //     }
+        // }
     },
     {
         path:'/about',
@@ -59,15 +58,22 @@ export default [
         meta:{show:true,head:true,isAuto:true,title:'主页'}
     },
     {
-        path:'/index',
+        path:'/',
+        redirect:'/index',
         component:Index,
         //是否显示footer组件
-        meta:{show:false,head:true,isAuto:true},
-       
+        children:[
+            {
+                path:'index',
+                component:Index,
+                meta:{show:false,head:true,isAuto:true},
+            }
+        ]
     },
     {
         path:'/article',
         component:Article,
+        redirect:'/article/css',
         meta:{show:true,head:true,isAuto:true},
         children:[
             {
@@ -110,9 +116,10 @@ export default [
            
         ]
     },
-    {
-        path:'*',
-        redirect:'/login'
-    }
+    // * 应该是到404模块   path:'/'到首页
+    // {
+    //     path:'*',
+    //     redirect:'/login'
+    // }
 ]
 

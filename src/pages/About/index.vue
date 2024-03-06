@@ -17,7 +17,6 @@
         <div class="person-introduction-right">
           <h1 style="border-bottom: 1px solid black;display: block;">教育背景/Eudcation</h1>
           <div>
-            <span>湖南科技大学潇湘学院</span>
             <span>本科</span>
           </div>
           <h1 style="border-bottom: 1px solid black;">个人介绍/Introduction</h1>

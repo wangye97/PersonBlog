@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import getters  from './getters'
 import capital from './capital'
 import home from './home'
 import article from './article'
@@ -18,5 +18,6 @@ export default new Vuex.Store({
         user,
         more
     },
+    getters,
     plugins: [createPersistedState()]
 })

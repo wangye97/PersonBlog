@@ -40,6 +40,7 @@ import * as THREE from "three";
 import BIRDS from "vanta/src/vanta.birds";
 import { mapState } from 'vuex';
 import {reqLogout} from '@/api'
+import { removeToken } from "@/utils/auth";
 export default {
   name: "Header-header",
   computed:{
@@ -53,7 +54,7 @@ export default {
       const {id}=this.getUserInfo
       let result=await reqLogout(id)
       if(result.status==200){
-        sessionStorage.clear('isLogin')
+        removeToken()
         this.$message.success('退出成功')
         this.$router.replace('/login')
       }else{

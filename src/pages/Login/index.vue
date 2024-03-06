@@ -42,8 +42,12 @@ export default {
                    }
                    if(result.code==200){
                         this.$message.success('登录成功')
-                        sessionStorage.setItem('isLogin',1)
-                        this.$router.replace('/index')
+                        // this.$notify({
+                        //     title: '请修改初始密码！',
+                        //     type: 'warning',
+                        //     duration: 2500
+                        // })
+                        this.$router.push('/index')
                    }else if(result.code==400){
                         this.$message(result.data)
                         if(result.data=='密码错误'){
@@ -57,7 +61,6 @@ export default {
 
                     
                 }
-                   
                 }
                 else{
                     this.$message.error('账户名或密码不能为空')
