@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
                             next({ ...to, replace: true })
                         })
                 }
-                next()
+                next()；
         }
     } else {
         if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
