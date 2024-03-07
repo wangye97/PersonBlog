@@ -5,7 +5,7 @@ import Vue from "vue";
 import { getToken } from "@/utils/auth";
 Vue.use(VueRouter)
 const whiteList = ['/login']// no redirect whitelist
-const flag=true
+let flag=true
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
@@ -25,9 +25,11 @@ router.beforeEach((to, from, next) => {
                         store.dispatch('GenerateRoutes',dynamicRouter).then(()=>{
                             router.addRoutes(dynamicRouter)
                             next({ ...to, replace: true })
+                        }).catch((e)=>{
+                            console.log(e);
                         })
                 }
-                next()；
+                next();
         }
     } else {
         if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
