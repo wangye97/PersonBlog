@@ -6,17 +6,28 @@ const actions = {
         if (result.data.code == 200) {
             setToken(result.data.data.username)
             commit('VALIDATELOGIN', result.data.data)
+            commit('LOADMENU', true)
         }
         return result.data
     },
+    updateLoadMenus({commit}){
+        commit('UPDATELOADMENUS',false)
+    }
 }
 const mutations = {
     VALIDATELOGIN(state, data) {
         state.userInfo = data
+    },
+    LOADMENU(state, loadMenus){
+        state.loadMenus = loadMenus
+    },
+    UPDATELOADMENUS(state,loadMenus){
+        state.loadMenu=loadMenus
     }
 }
 const state = {
-    userInfo: {}
+    userInfo: {},
+    loadMenu:false
 }
 
 export default {

@@ -21,7 +21,6 @@ const getters={
     homeList(state){
         return state.homeInfo[state.index]||[]
     },
-   
 }
 
 export default{

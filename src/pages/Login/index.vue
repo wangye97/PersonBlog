@@ -7,12 +7,16 @@
             <div>
                 <input ref="ipts" type="text" class="input-item" placeholder="username" v-model="user.username">
                 <input ref="psw" type="password" class="input-item" placeholder="password" v-model="user.password" @keydown.enter="login">
+                <input type="checkbox" class="input-checkbox" v-model="user.remember">记住我
                 <button class="Footer" @click="login">Login</button>
                 <div class="msg">
                     Don't have account?
                     <a href="javascript:;" @click="$router.push('/register')">go sign up</a>
                 </div>
             </div>
+            <!-- <el-form :model="user">
+
+            </el-form> -->
         </div>
         </transition>
     </div>
@@ -20,13 +24,15 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
     name:'Login',
     data() {
         return {
             user:{
                 username:'',
-                password:''
+                password:'',
+                remember:''
             },
             //验证规则
             message:''
@@ -41,6 +47,16 @@ export default {
                     this.$message.error(result.message)
                    }
                    if(result.code==200){
+                        if(this.user.remember){
+                            Cookies.set('username',this.user.username,{expires:1})
+                            Cookies.set('password',this.user.password,{expires:1})
+                            Cookies.set('remember',this.user.remember,{expires:1})
+                        }
+                        // else{
+                        //     Cookies.remove('username')
+                        //     Cookies.remove('password')
+                        //     Cookies.remove('remember')
+                        // }
                         this.$message.success('登录成功')
                         // this.$notify({
                         //     title: '请修改初始密码！',
@@ -69,10 +85,16 @@ export default {
            } catch (error) {
                 alert(error.message)
            }
+        },
+        getCookies(){
+            this.user.username=Cookies.get('username')
+            this.user.password=Cookies.get('password')
+            this.user.remember=Cookies.get('remember')
         }
     },
     mounted(){
         this.$refs.ipts.focus()
+        this.getCookies()
     }
 }
 </script>
@@ -125,6 +147,10 @@ export default {
         margin-bottom: 30px;
         outline: none;
         font-size: 15px;
+    }
+    .wrapper .login-contain .input-checkbox{
+        margin: 0px 10px 10px 40px;
+
     }
    
     .wrapper .login-contain .Footer{

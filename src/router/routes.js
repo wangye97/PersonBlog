@@ -8,7 +8,7 @@ import PromiseArticle from '@/pages/Article/promise'
 import AjaxArticle from '@/pages/Article/ajax'
 import NodeArticle from '@/pages/Article/nodejs'
 import VueArticle from '@/pages/Article/vue'
-export default [
+export const StaticRouter= [
     {
         path:'/login',
         component:()=>import('@/pages/Login'),
@@ -70,6 +70,15 @@ export default [
             }
         ]
     },
+   
+    // * 应该是到404模块   path:'/'到首页
+    // {
+    //     path:'*',
+    //     redirect:'/login'
+    // }
+]
+
+export const dynamicRouter =[
     {
         path:'/article',
         component:Article,
@@ -116,10 +125,5 @@ export default [
            
         ]
     },
-    // * 应该是到404模块   path:'/'到首页
-    // {
-    //     path:'*',
-    //     redirect:'/login'
-    // }
 ]
 
