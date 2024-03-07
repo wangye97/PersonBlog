@@ -78,7 +78,7 @@ export const StaticRouter= [
     // }
 ]
 
-export const dynamicRouter  =[
+export const dynamicRouter =[
     {
         path:'/article',
         component:Article,
