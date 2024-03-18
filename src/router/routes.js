@@ -2,13 +2,12 @@ import Home from '@/pages/Home'
 import Index from '@/pages/Index'
 import Article from '@/pages/Article'
 import About from '@/pages/About'
-import CssArticle from '@/pages/Article/css'
 import JsArticle from '@/pages/Article/js'
 import PromiseArticle from '@/pages/Article/promise'
 import AjaxArticle from '@/pages/Article/ajax'
 import NodeArticle from '@/pages/Article/nodejs'
 import VueArticle from '@/pages/Article/vue'
-export default [
+export const StaticRouter= [
     {
         path:'/login',
         component:()=>import('@/pages/Login'),
@@ -36,16 +35,20 @@ export default [
         meta:{head:true,show:true,isAuto:true,title:'更多'}
     },
     {
+        path:'/layout',
+        component:()=>import('@/layout/index.vue'),
+        // meta:{head:true,show:true,isAuto:true,title:'更多'}
+    },
+    {
+        path:'/message',
+        component:()=>import('@/pages/Message'),
+        meta:{head:true,show:false,isAuto:true,title:'留言板'}
+    },
+    {
         path:'/register',
         component:()=>import('@/pages/Register'),
         meta:{head:false,title:'注册',isAuto:false},
-        beforeEnter: (to, from, next) => {
-            if(from.path=='/login'||from.path=='/'){
-                next()
-            }else{
-                next(false)
-            }
-        }
+        
     },
     {
         path:'/reset',
@@ -59,12 +62,30 @@ export default [
         meta:{show:true,head:true,isAuto:true,title:'主页'}
     },
     {
-        path:'/index',
+        path:'/',
+        redirect:'/index',
         component:Index,
-        //是否显示footer组件
-        meta:{show:false,head:true,isAuto:true},
+        children:[
+            {
+                path:'index',
+                component:Index,
+                meta:{show:false,head:true,isAuto:true},
+            }
+        ]
        
     },
+    {
+        path: '/404',
+        component: (resolve) => require(['@/pages/features/404'], resolve),
+        hidden: true
+      },
+    
+    {
+        path:'*',
+        redirect:'/404'
+    }
+]
+export const dynamicRouter=[
     {
         path:'/article',
         component:Article,
@@ -110,9 +131,5 @@ export default [
            
         ]
     },
-    {
-        path:'*',
-        redirect:'/login'
-    }
 ]
 

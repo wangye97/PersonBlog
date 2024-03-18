@@ -1,88 +1,187 @@
 <template>
-  <div class="box">
-    <div ref="vantaRef" style="width:100%; height: 170px"></div>
-    <div class="header banner" >
-      <div style="margin-left: 50px; display: flex; align-items: center;">
-        <img class="imgs" :src="getUserInfo.avatar" alt="">
-        <router-link to="/index">{{getUserInfo.username}}</router-link>
-      </div>
-      <div class="right-header">
-        <div class="el-icon-user-solid">
-          <router-link class="active" to="/home">主页</router-link>
+    <div class="box">
+      <div class="header banner">
+        <ul class="nav-contain" @click="showState">
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <div class="left-header" style="display: flex; align-items: center">
+          <img class="imgs" :src="getUserInfo.avatar" alt="" />
+          <router-link to="/index">{{ getUserInfo.username }}</router-link>
         </div>
-        <div class="el-icon-document">
-          <router-link class="active" to="/article/css">知识库</router-link>
-        </div>
-        <div class="el-icon-link">
-          <router-link class="active" to="/about">关于</router-link>
-        </div>
-        <div class="el-icon-user-solid">
-          <router-link class="active" to="/more">更多</router-link>
-        </div>
-        <div class="el-icon-s-custom setting">
-          <span class="active">设置</span>
-          <div class="inner-setting">
-            <a href="javascript:;" @click="resetPassword">修改密码</a>
-            <a href="javascript:;" @click="logout">退出登录</a>
+
+        <transition name="el-zoom-in-center">
+        <div ref="personInfo" class="right-header transition-box more" style="{height:18px}">
+          <div class="fork-left">
+            <div class="el-icon-user-solid" @click="showState">
+              <router-link class="active" to="/home">主页</router-link>
+            </div>
+            <div class="el-icon-document" @click="showState">
+              <router-link class="active" to="/article/css">知识库</router-link>
+            </div>
+            <div class="el-icon-link" @click="showState">
+              <router-link class="active" to="/about">关于</router-link>
+            </div>
+            <div class="el-icon-plus" @click="showState">
+              <router-link class="active" to="/more">更多</router-link>
+            </div>
+            <div class="el-icon-message" @click="showState">
+              <router-link class="active" to="/message">留言厅</router-link>
+            </div>
+            <div class="resetPassword el-icon-s-help" @click="showState">
+              <a href="javascript:;" @click="resetPassword">修改密码</a>
+            </div>
+            <div class="logout el-icon-s-release" @click="showState">
+              <a href="javascript:;" @click="logout">退出登录</a>
+            </div>
+            <div class="el-icon-s-custom setting">
+              <span class="active">设置</span>
+              <div class="inner-setting">
+                <a href="javascript:;" @click="resetPassword">修改密码</a>
+                <a href="javascript:;" @click="logout">退出登录</a>
+              </div>
+            </div>
           </div>
+          <ul class="fork" @click="showState">
+            <li></li>
+            <li></li>
+          </ul>
+          
         </div>
-      </div>
-      <div class="bar">
+        </transition>
+
+        <transition name="el-zoom-in-center">
+        <div ref="personInfo" class="right-header transition-box less" v-show="isShow" :style="{height:clientHeight-1+'px'}">
+          <div class="fork-left">
+            <div class="el-icon-user-solid" @click="showState">
+              <router-link class="active" to="/home">主页</router-link>
+            </div>
+            <div class="el-icon-document" @click="showState">
+              <router-link class="active" to="/article/css">知识库</router-link>
+            </div>
+            <div class="el-icon-link" @click="showState">
+              <router-link class="active" to="/about">关于</router-link>
+            </div>
+            <div class="el-icon-plus" @click="showState">
+              <router-link class="active" to="/more">更多</router-link>
+            </div>
+            <div class="resetPassword el-icon-s-help" @click="showState">
+              <a href="javascript:;" @click="resetPassword">修改密码</a>
+            </div>
+            <div class="logout el-icon-s-release" @click="showState">
+              <a href="javascript:;" @click="logout">退出登录</a>
+            </div>
+            <div class="el-icon-s-custom setting">
+              <span class="active">设置</span>
+              <div class="inner-setting">
+                <a href="javascript:;" @click="resetPassword">修改密码</a>
+                <a href="javascript:;" @click="logout">退出登录</a>
+              </div>
+            </div>
+          </div>
+          <ul class="fork" @click="showState">
+            <li></li>
+            <li></li>
+          </ul>
+          
+        </div>
+      </transition>
+
+        <!-- <div class="bar">
           <div class="ball"></div>
+        </div> -->
       </div>
     </div>
-    
-  </div>
 </template>
+
 
 <script>
 import * as THREE from "three";
 import BIRDS from "vanta/src/vanta.birds";
-import { mapState } from 'vuex';
-import {reqLogout} from '@/api'
+import { mapState } from "vuex";
+import { reqLogout } from "@/api";
+import { removeToken } from "@/utils/auth";
 export default {
   name: "Header-header",
-  computed:{
-    ...mapState({getUserInfo:(state)=>state.user.userInfo})
+  data() {
+    return {
+      isShow: false,
+      moreShow:true,
+      clientWidth: document.body.clientWidth,
+      once: 0,
+      clientHeight:document.body.clientHeight,
+      timer:null
+    };
   },
-  methods:{
-    resetPassword(){
-      this.$router.push('/reset')
+  computed: {
+    ...mapState({ getUserInfo: (state) => state.user.userInfo }),
+  },
+  watch: {
+    clientWidth(){
+        this.isShow=false
     },
-    async logout(){
-      const {id}=this.getUserInfo
-      let result=await reqLogout(id)
-      if(result.status==200){
-        sessionStorage.clear('isLogin')
-        this.$message.success('退出成功')
-        this.$router.replace('/login')
-      }else{
-        this.$message('退出失败')
-      }
-    }
   },
-  mounted(){
-    this.vantaEffect = BIRDS({
-      el: this.$refs.vantaRef,
-      THREE: THREE,
-    });
+  methods: {
+    resetPassword() {
+      this.$router.push("/reset");
+    },
+    async logout() {
+      const { id } = this.getUserInfo;
+      let result = await reqLogout(id);
+      if (result.status == 200) {
+        removeToken()
+        this.$message.success("退出成功");
+        this.$router.replace("/login");
+      } else {
+        this.$message("退出失败");
+      }
+    },
+    showState() {
+    //  if(this.clientWidth<=768){
+      this.once += 1;
+      if (this.once % 2 == 1) {
+        this.isShow = true;
+      } else {
+        this.isShow = false;
+      }
+    //  }
+    },
+  },
+  mounted() {
+    // this.vantaEffect = BIRDS({
+    //   el: this.$refs.vantaRef,
+    //   THREE: THREE,
+    // });
     // 修改颜色时 cells 需要全大写字母 可生效
-    VANTA.BIRDS({
-      el: this.$refs.vantaRef,
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-      backgroundColor: 0xffffff,
-      color: 0xaab89a,
-      backgroundAlpha: 0.87
-    });
+    // VANTA.BIRDS({
+    //   el: this.$refs.vantaRef,
+    //   mouseControls: true,
+    //   touchControls: true,
+    //   gyroControls: false,
+    //   minHeight: 200.00,
+    //   minWidth: 200.00,
+    //   scale: 1.00,
+    //   scaleMobile: 1.00,
+    //   backgroundColor: 0xffffff,
+    //   color: 0xaab89a,
+    //   backgroundAlpha: 0.87
+    // });
     // if(this.$route.path=='/index'){
     //   this.$router.push('/index')
     // }
+       let flag=true
+        window.onresize = () => {
+          if(flag==true){
+            setTimeout(()=>{
+              this.clientWidth = document.body.clientWidth;
+              this.clientHeight=document.body.clientHeight
+              flag=true
+            },100)
+          }
+        flag=false
+        };
+
   },
   beforeDestroy() {
     if (this.vantaEffect) {
@@ -93,16 +192,24 @@ export default {
 </script>
 
 <style>
-html,body{
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
-.box{
+.box {
+  min-width: 1215px;
   position: relative;
-  background-color: rgb(223, 225, 228);
+  min-height: 20%;
+  /* min-height: 60px; */
+  background-color: aliceblue;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 }
-.box .banner{
+
+/* .box .banner{
     z-index: 999;
     position: absolute;
     top: 0;
@@ -111,59 +218,84 @@ html,body{
     left: 0;
     margin: auto;
     color: #000;
-}
-.header {
+} */
+.box .header {
   font-family: 隶书;
-  width: 80%;
-  height: 40px;
-  /* background-color: white; */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  color: #000;
+  width: 1215px;
+  height: 150px;
+  /* height: 60px; */
+  background-color: aliceblue;
   font-size: 18px;
-  border-radius: 15px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
 }
-.header .imgs{
+.box .header .less{
+    display: none;
+  }
+.header .nav-contain {
+  display: none;
+}
+
+.header .imgs {
   height: 30px;
   width: 30px;
   border-radius: 50%;
   margin-right: 10px;
 }
-.header .right-header{
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+
+.header .right-header {
+  width: 50%;
+ 
 }
-.right-header .active{
+.header .right-header .fork-left{
+  width: 110%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.header .right-header .resetPassword{
+  display: none;
+}
+.header .right-header .logout{
+  display: none;
+}
+.right-header .active {
   font-family: 隶书;
 }
-.setting{
+.setting {
   position: relative;
-  
 }
-.setting:hover .inner-setting{
+.setting:hover .inner-setting {
   display: block;
 }
-.inner-setting:hover{
+.inner-setting:hover {
   display: block;
 }
-.inner-setting{
+.inner-setting {
   display: none;
   position: absolute;
   width: 80px;
   height: 80px;
   background: rgb(223, 225, 228);
-  top: 19px;
+  top: 18px;
   left: -20px;
 }
-.inner-setting a{
+.inner-setting a {
   display: block;
-  margin-top: 20px;
+  margin-top: 16px;
   font-size: 15px;
   text-align: center;
   color: azure;
+}
+/* .fork{
+  display: none;
+} */
+.bar {
+  order: 3;
+  margin-right: 13px;
 }
 
 .ball {
@@ -179,7 +311,7 @@ html,body{
 
 .ball::after {
   position: absolute;
-  content: '';
+  content: "";
   top: 25px;
   right: 5px;
   width: 5px;
@@ -191,7 +323,7 @@ html,body{
 .bar {
   width: 200px;
   height: 12.5px;
-  background: #FFDAAF;
+  background: #ffdaaf;
   border-radius: 30px;
   transform: rotate(-15deg);
   animation: up-down6123 3s ease-in-out 1s infinite alternate;
@@ -217,5 +349,114 @@ html,body{
     left: calc(0% - 20px);
     transform: rotate(0deg);
   }
+}
+
+@media only screen and (max-width: 768px) {
+  .box{
+    /* width: 1215px; */
+    min-width: 100%;
+    /* width: 100%; */
+  }
+  .box .header {
+    width: 100%;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .box .header .nav-contain {
+    display: block;
+    width: 18px;
+    height: 48px;
+    position: relative;
+    list-style: none;
+  }
+  .box .header .nav-contain li {
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    background-color: #000;
+  }
+  .box .header .nav-contain li:nth-child(1) {
+    top: 16px;
+  }
+  .box .header .nav-contain li:nth-child(2) {
+    top: 24px;
+  }
+  .box .header .nav-contain li:nth-child(3) {
+    bottom: 16px;
+  }
+  .box .header .left-header {
+    order: 2;
+  }
+  .box .header .right-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* height: 100%; */
+    z-index: 999;
+  }
+  .box .header .more{
+    display: none;
+  }
+  .box .header .less{
+    display: block;
+  }
+  .box .header .right-header .fork-left div {
+    display: block;
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    padding: 30px 0;
+  }
+  .box .header .right-header .fork-left div a {
+    font-family: 隶书;
+    color: #000;
+    font-size: 18px;
+  } 
+  .box .header .right-header .fork-left div a:hover {
+    font-family: 隶书;
+  } 
+  .box .header .right-header .fork-left{
+    width: 80%;
+    height: 100%;
+    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
+  .box .header .right-header .fork{
+    display: block;
+    width: 20%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .1);
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+  }
+  .box .header .right-header .fork li{
+    width: 20px;
+    height: 2px;
+    background: #000;
+    opacity: .6;
+    position: absolute;
+    top: 40px;
+    left: 40%;
+  }
+  .box .header .right-header .fork li:nth-child(1){
+      transform: rotate(65deg);
+  }
+  .box .header .right-header .fork li:nth-child(2){
+    transform: rotate(-65deg);
+  }
+
+  .box .header .right-header .fork-left .setting {
+    display: none;
+  }
+  
+  
 }
 </style>
