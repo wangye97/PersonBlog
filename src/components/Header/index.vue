@@ -1,17 +1,17 @@
 <template>
-    <div class="box">
-      <div class="header banner">
-        <ul class="nav-contain" @click="showState">
+  <div class="box">
+    <div class="header banner">
+      <!-- <ul class="nav-contain" @click="showState">
           <li></li>
           <li></li>
           <li></li>
-        </ul>
-        <div class="left-header" style="display: flex; align-items: center">
-          <img class="imgs" :src="getUserInfo.avatar" alt="" />
-          <router-link to="/index">{{ getUserInfo.username }}</router-link>
-        </div>
+        </ul> -->
+      <div class="left-header" style="display: flex; align-items: center">
+        <img class="imgs" :src="getUserInfo.avatar" alt="" />
+        <router-link to="/index">{{ getUserInfo.username }}</router-link>
+      </div>
 
-        <transition name="el-zoom-in-center">
+      <transition name="el-zoom-in-center">
         <div ref="personInfo" class="right-header transition-box more" style="{height:18px}">
           <div class="fork-left">
             <div class="el-icon-user-solid" @click="showState">
@@ -24,17 +24,19 @@
               <router-link class="active" to="/about">关于</router-link>
             </div>
             <div class="el-icon-plus" @click="showState">
-              <router-link class="active" to="/more">更多</router-link>
+              <router-link class="active" to="/about">更多</router-link>
             </div>
             <div class="el-icon-message" @click="showState">
               <router-link class="active" to="/message">留言厅</router-link>
             </div>
-            <div class="resetPassword el-icon-s-help" @click="showState">
+
+            <!-- <div class="resetPassword el-icon-s-help" @click="showState">
               <a href="javascript:;" @click="resetPassword">修改密码</a>
             </div>
             <div class="logout el-icon-s-release" @click="showState">
               <a href="javascript:;" @click="logout">退出登录</a>
-            </div>
+            </div> -->
+
             <div class="el-icon-s-custom setting">
               <span class="active">设置</span>
               <div class="inner-setting">
@@ -47,11 +49,11 @@
             <li></li>
             <li></li>
           </ul>
-          
-        </div>
-        </transition>
 
-        <transition name="el-zoom-in-center">
+        </div>
+      </transition>
+
+      <!-- <transition name="el-zoom-in-center">
         <div ref="personInfo" class="right-header transition-box less" v-show="isShow" :style="{height:clientHeight-1+'px'}">
           <div class="fork-left">
             <div class="el-icon-user-solid" @click="showState">
@@ -86,13 +88,13 @@
           </ul>
           
         </div>
-      </transition>
+      </transition> -->
 
-        <!-- <div class="bar">
+      <!-- <div class="bar">
           <div class="ball"></div>
         </div> -->
-      </div>
     </div>
+  </div>
 </template>
 
 
@@ -107,19 +109,19 @@ export default {
   data() {
     return {
       isShow: false,
-      moreShow:true,
+      moreShow: true,
       clientWidth: document.body.clientWidth,
       once: 0,
-      clientHeight:document.body.clientHeight,
-      timer:null
+      clientHeight: document.body.clientHeight,
+      timer: null
     };
   },
   computed: {
     ...mapState({ getUserInfo: (state) => state.user.userInfo }),
   },
   watch: {
-    clientWidth(){
-        this.isShow=false
+    clientWidth() {
+      this.isShow = false
     },
   },
   methods: {
@@ -138,14 +140,14 @@ export default {
       }
     },
     showState() {
-    //  if(this.clientWidth<=768){
+      //  if(this.clientWidth<=768){
       this.once += 1;
       if (this.once % 2 == 1) {
         this.isShow = true;
       } else {
         this.isShow = false;
       }
-    //  }
+      //  }
     },
   },
   mounted() {
@@ -170,17 +172,17 @@ export default {
     // if(this.$route.path=='/index'){
     //   this.$router.push('/index')
     // }
-       let flag=true
-        window.onresize = () => {
-          if(flag==true){
-            setTimeout(()=>{
-              this.clientWidth = document.body.clientWidth;
-              this.clientHeight=document.body.clientHeight
-              flag=true
-            },100)
-          }
-        flag=false
-        };
+    let flag = true
+    window.onresize = () => {
+      if (flag == true) {
+        setTimeout(() => {
+          this.clientWidth = document.body.clientWidth;
+          this.clientHeight = document.body.clientHeight
+          flag = true
+        }, 100)
+      }
+      flag = false
+    };
 
   },
   beforeDestroy() {
@@ -198,15 +200,25 @@ body {
   padding: 0;
   height: 100%;
 }
+
 .box {
-  min-width: 1215px;
+  width: 100%;
   position: relative;
-  min-height: 20%;
-  /* min-height: 60px; */
-  background-color: aliceblue;
   /* display: flex;
   align-items: center;
   justify-content: center; */
+}
+.box:hover{
+  background-color: rgba(210, 228, 222,.5);
+  animation: op 1s linear;
+}
+@keyframes op {
+  form{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }
 
 /* .box .banner{
@@ -223,18 +235,20 @@ body {
   font-family: 隶书;
   color: #000;
   width: 1215px;
-  height: 150px;
-  /* height: 60px; */
-  background-color: aliceblue;
+  /* height: 150px; */
+  height: 60px;
+  /* background-color: aliceblue; */
   font-size: 18px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: auto;
 }
-.box .header .less{
-    display: none;
-  }
+
+.box .header .less {
+  display: none;
+}
+
 .header .nav-contain {
   display: none;
 }
@@ -248,32 +262,43 @@ body {
 
 .header .right-header {
   width: 50%;
- 
+
 }
-.header .right-header .fork-left{
+
+.header .right-header .fork-left {
   width: 110%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
-.header .right-header .resetPassword{
+
+.header .right-header .resetPassword {
   display: none;
 }
-.header .right-header .logout{
+
+.header .right-header .logout {
   display: none;
 }
+
 .right-header .active {
+  color: rgb(236, 106, 92);
+  font-size: 22px;
   font-family: 隶书;
 }
+
+
 .setting {
   position: relative;
 }
+
 .setting:hover .inner-setting {
   display: block;
 }
+
 .inner-setting:hover {
   display: block;
 }
+
 .inner-setting {
   display: none;
   position: absolute;
@@ -283,6 +308,7 @@ body {
   top: 18px;
   left: -20px;
 }
+
 .inner-setting a {
   display: block;
   margin-top: 16px;
@@ -290,6 +316,7 @@ body {
   text-align: center;
   color: azure;
 }
+
 /* .fork{
   display: none;
 } */
@@ -352,18 +379,20 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
-  .box{
+  .box {
     /* width: 1215px; */
     min-width: 100%;
     /* width: 100%; */
   }
+
   .box .header {
     width: 100%;
-    
+
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   .box .header .nav-contain {
     display: block;
     width: 18px;
@@ -371,24 +400,30 @@ body {
     position: relative;
     list-style: none;
   }
+
   .box .header .nav-contain li {
     height: 1px;
     width: 100%;
     position: absolute;
     background-color: #000;
   }
+
   .box .header .nav-contain li:nth-child(1) {
     top: 16px;
   }
+
   .box .header .nav-contain li:nth-child(2) {
     top: 24px;
   }
+
   .box .header .nav-contain li:nth-child(3) {
     bottom: 16px;
   }
+
   .box .header .left-header {
     order: 2;
   }
+
   .box .header .right-header {
     position: absolute;
     left: 0;
@@ -397,12 +432,15 @@ body {
     /* height: 100%; */
     z-index: 999;
   }
-  .box .header .more{
+
+  .box .header .more {
     display: none;
   }
-  .box .header .less{
+
+  .box .header .less {
     display: block;
   }
+
   .box .header .right-header .fork-left div {
     display: block;
     width: 100%;
@@ -410,15 +448,18 @@ body {
     line-height: 48px;
     padding: 30px 0;
   }
+
   .box .header .right-header .fork-left div a {
     font-family: 隶书;
     color: #000;
     font-size: 18px;
-  } 
+  }
+
   .box .header .right-header .fork-left div a:hover {
     font-family: 隶书;
-  } 
-  .box .header .right-header .fork-left{
+  }
+
+  .box .header .right-header .fork-left {
     width: 80%;
     height: 100%;
     background-color: azure;
@@ -427,7 +468,8 @@ body {
     justify-content: start;
     align-items: start;
   }
-  .box .header .right-header .fork{
+
+  .box .header .right-header .fork {
     display: block;
     width: 20%;
     height: 100%;
@@ -437,7 +479,8 @@ body {
     top: 0;
     z-index: 999;
   }
-  .box .header .right-header .fork li{
+
+  .box .header .right-header .fork li {
     width: 20px;
     height: 2px;
     background: #000;
@@ -446,17 +489,19 @@ body {
     top: 40px;
     left: 40%;
   }
-  .box .header .right-header .fork li:nth-child(1){
-      transform: rotate(65deg);
+
+  .box .header .right-header .fork li:nth-child(1) {
+    transform: rotate(65deg);
   }
-  .box .header .right-header .fork li:nth-child(2){
+
+  .box .header .right-header .fork li:nth-child(2) {
     transform: rotate(-65deg);
   }
 
   .box .header .right-header .fork-left .setting {
     display: none;
   }
-  
-  
+
+
 }
 </style>

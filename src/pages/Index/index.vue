@@ -56,15 +56,14 @@
   
   <style>
   .outContain{
-    min-height: calc(80% - 5px); 
-    background-color:rgb(223, 225, 228); 
+    /* background-color:rgb(223, 225, 228);  */
+    height: calc(100% - 60px);
     min-width: 1215px;
-    overflow: hidden;
   }
 
   .innerContain{
     height: 582px; 
-    background-color: rgb(223, 225, 228); 
+    /* background-color: rgb(223, 225, 228);  */
     width: 1215px; 
     margin: 0 auto;
   }
@@ -79,7 +78,7 @@
     align-content: center;
     justify-content: space-evenly;
     color: white;
-    background-color:rgb(223, 225, 228);
+    /* background-color:rgb(223, 225, 228); */
   }
     .random h1{
       font-size: 35px;

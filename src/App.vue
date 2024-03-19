@@ -30,10 +30,11 @@ body,
 }
 #app {
   width: 100%;
+  height: 1500px;
   overflow: auto;
-    /* background-size: 100%; */
-  /* background-image: url("https://img2.baidu.com/it/u=3669621074,626247377&fm=253&fmt=auto&app=138&f=JPEG?w=888&h=500");
-  background-size: 100% 100%; */
+  background-size: 100%;
+  background-image: url("https://img2.baidu.com/it/u=3669621074,626247377&fm=253&fmt=auto&app=138&f=JPEG?w=888&h=500");
+  background-size: 100% 100%;
 }
 #app::-webkit-scrollbar {
      width: 8px; /*  设置纵轴（y轴）轴滚动条 */
