@@ -24,8 +24,16 @@
             <img :src="userAvatar" alt="" class="imgs">
         </div>
         <div class="person-introduction-right">
+<<<<<<< HEAD
          
           <h3 style="border-bottom: 1px solid black;">个人介绍/Introduction</h3>
+=======
+          <h1 style="border-bottom: 1px solid black;display: block;">教育背景/Eudcation</h1>
+          <div>
+            <span>本科</span>
+          </div>
+          <h1 style="border-bottom: 1px solid black;">个人介绍/Introduction</h1>
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
           <h5>爱好:</h5>
           <ul>
             <li>看电视剧、篮球、LOL</li>

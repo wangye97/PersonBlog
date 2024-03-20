@@ -1,7 +1,11 @@
 import Vue, { isProxy } from 'vue'
 import Vuex from 'vuex'
+<<<<<<< HEAD
 import getters from './getters'
 
+=======
+import getters  from './getters'
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
 import capital from './capital'
 import home from './home'
 import article from './article'

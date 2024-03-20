@@ -48,12 +48,13 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
+  import {mapState,mapGetters } from "vuex";
 export default {
   name:'Home',
   computed:{
-    ...mapState({
-      homeInfo:(state)=>state.home.homeInfo}),
+    ...mapGetters(['homeInfo']),
+    // ...mapState({
+    //   homeInfo:(state)=>state.home.homeInfo}),
     // ...mapState('home',['homeInfo']),
     // ...mapState('home',{homeInfo:'homeInfo'}),
     getText(){

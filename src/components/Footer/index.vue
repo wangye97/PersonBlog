@@ -5,7 +5,7 @@
         <div class="statement">
             <div>the morning sun never lasts a day</div>
             <div>Every tide has its ebb</div>
-            <div>Diligence is the mother of good fortune</div>
+            <div>Diligence is the mother of good fortune</div> 
         </div>
         <div>if you do not learn to think when you are young,you may never learn</div>
         <div>分别后的难过都是依赖，无法相拥的人要好好道别————|至此流年给天涯|</div>

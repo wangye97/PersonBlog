@@ -8,12 +8,8 @@
     <div class="tools-contain">
       <div class="all-contain">
         <h1>算法之家</h1>
-
-
         <div class="out-contain">
-
           <div ref="inner" class="inner-contain" @mouseenter="move" @mouseleave="moveto">
-
            <transition name="change1">
             <div class="isShow-left" v-show="isShow">
               <img
@@ -34,14 +30,7 @@
                 </div>
               </div>
             </transition>
-
           </div>
-
-
-
-
-
-
         </div>
       </div>
     </div>

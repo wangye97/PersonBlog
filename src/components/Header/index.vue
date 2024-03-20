@@ -106,8 +106,13 @@
 <script>
 import * as THREE from "three";
 import BIRDS from "vanta/src/vanta.birds";
+<<<<<<< HEAD
 import { mapState } from "vuex";
 import { reqLogout } from "@/api";
+=======
+import { mapState } from 'vuex';
+import {reqLogout} from '@/api'
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
 import { removeToken } from "@/utils/auth";
 export default {
   name: "Header-header",
@@ -128,6 +133,20 @@ export default {
     clientWidth() {
       this.isShow = false
     },
+<<<<<<< HEAD
+=======
+    async logout(){
+      const {id}=this.getUserInfo
+      let result=await reqLogout(id)
+      if(result.status==200){
+        removeToken()
+        this.$message.success('退出成功')
+        this.$router.replace('/login')
+      }else{
+        this.$message('退出失败')
+      }
+    }
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
   },
   methods: {
     resetPassword() {

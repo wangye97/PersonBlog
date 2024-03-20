@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div>
         <particles></particles>
         <div class="wrapper-contain" ref="contain">
@@ -20,6 +21,21 @@
                             <a href="javascript:;" @click="$router.push('/register')">go sign up</a>
                         </div> -->
                     </div>
+=======
+  <div>
+    <div class="wrapper">
+        <transition name="hello" appear>
+            <div class="login-contain">
+            <div class="Header">Login</div>
+            <div>
+                <input ref="ipts" type="text" class="input-item" placeholder="username" v-model="user.username">
+                <input ref="psw" type="password" class="input-item" placeholder="password" v-model="user.password" @keydown.enter="login">
+                <input type="checkbox" class="input-checkbox" v-model="user.remember">记住我
+                <button class="Footer" @click="login">Login</button>
+                <div class="msg">
+                    Don't have account?
+                    <a href="javascript:;" @click="$router.push('/register')">go sign up</a>
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
                 </div>
                 <div class="no-user no-user1" v-show="!isShow">
                     <div class="user">
@@ -54,6 +70,9 @@
                 </div>
 
             </div>
+            <!-- <el-form :model="user">
+
+            </el-form> -->
         </div>
     </div>
 
@@ -61,21 +80,31 @@
 
 <script>
 import Cookies from 'js-cookie'
+<<<<<<< HEAD
 //给cookie加密
 import CryptoJS from "crypto-js";
 import Config from '@/setting'
 import axios from 'axios';
 import { reqRegister } from '@/api'
 import particles from './components/particles.vue'
+=======
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
 export default {
     name: 'Login',
     components: { particles },
     data() {
         return {
+<<<<<<< HEAD
             user: {
                 username: '',
                 password: '',
                 remember: '',
+=======
+            user:{
+                username:'',
+                password:'',
+                remember:''
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
             },
             //验证规则
             message: '',
@@ -90,6 +119,7 @@ export default {
 
         }
     },
+<<<<<<< HEAD
     methods: {
         async particlesInit(engine) {
             await loadFull(engine)
@@ -103,6 +133,43 @@ export default {
                             this.$message.error(result.message)
                             this.getCode()
                             this.values = ''
+=======
+    methods:{
+        async login(){
+           try {
+                if(this.user.username!=''&&this.user.password!=''){
+                   let result= await this.$store.dispatch('validateLogin',this.user)
+                   if(result.message){
+                    this.$message.error(result.message)
+                   }
+                   if(result.code==200){
+                        if(this.user.remember){
+                            Cookies.set('username',this.user.username,{expires:1})
+                            Cookies.set('password',this.user.password,{expires:1})
+                            Cookies.set('remember',this.user.remember,{expires:1})
+                        }
+                        // else{
+                        //     Cookies.remove('username')
+                        //     Cookies.remove('password')
+                        //     Cookies.remove('remember')
+                        // }
+                        this.$message.success('登录成功')
+                        // this.$notify({
+                        //     title: '请修改初始密码！',
+                        //     type: 'warning',
+                        //     duration: 2500
+                        // })
+                        this.$router.push('/index')
+                   }else if(result.code==400){
+                        this.$message(result.data)
+                        if(result.data=='密码错误'){
+                            this.user.password=''
+                            this.$refs.psw.focus()
+                        }else{
+                            this.user.username=''
+                            this.user.password=''
+                            this.$refs.ipts.focus()
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
                         }
                         if (result.code == 200) {
                             if (this.user.remember) {
@@ -141,6 +208,7 @@ export default {
                     this.getCode()
                     this.values = ''
                 }
+<<<<<<< HEAD
             } catch (error) {
                 alert(error.message)
             }
@@ -199,11 +267,27 @@ export default {
             this.user.username = ''
             this.user.password = ''
             this.user.remember = ''
+=======
+                }
+                else{
+                    this.$message.error('账户名或密码不能为空')
+                }
+
+           } catch (error) {
+                alert(error.message)
+           }
+        },
+        getCookies(){
+            this.user.username=Cookies.get('username')
+            this.user.password=Cookies.get('password')
+            this.user.remember=Cookies.get('remember')
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
         }
     },
     mounted() {
         this.getCode()
         this.$refs.ipts.focus()
+<<<<<<< HEAD
         try {
             this.getCookie()
         } catch (error) {
@@ -216,6 +300,9 @@ export default {
         // window.addEventListener('resize',()=>{
         //     this.elementHeight=this.$refs.contain.clientHeight-1+'px'
         // })
+=======
+        this.getCookies()
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
     }
 
 }
@@ -233,6 +320,7 @@ export default {
         to{
           transform: translateY(0%);
         }
+<<<<<<< HEAD
     } */
 .wrapper-contain {
     overflow: hidden;
@@ -252,6 +340,70 @@ export default {
     align-items: center;
     overflow: hidden;
 }
+=======
+    }
+    .wrapper{
+        width: 100%;
+        /* height: calc(100vh - 170px); */
+        height: 100vh;
+        background-image: url('https://img1.baidu.com/it/u=779394252,3452690001&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500');
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .wrapper .login-contain{
+        width: 358px;
+        height: 518px;
+        border-radius: 15px;
+        background-color: #fff; 
+        overflow: hidden;
+    }
+    .wrapper .login-contain .Header{
+        width: 100%;
+        font-size: 25px;
+        color: black;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+    .wrapper .login-contain .input-item{
+        width: 80%;
+        display: block;
+        margin: 0 auto;
+        border: 0;
+        border-bottom: 1px solid black;
+        height: 50px;
+        margin-bottom: 30px;
+        outline: none;
+        font-size: 15px;
+    }
+    .wrapper .login-contain .input-checkbox{
+        margin: 0px 10px 10px 40px;
+
+    }
+   
+    .wrapper .login-contain .Footer{
+        width: 80%;
+        height: 30px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        color: #fff;
+        background-image: linear-gradient(to right,#a6c1ee,#fbc2eb);
+        cursor: pointer;
+        border: 0;
+        border-radius: 5px;
+    }
+    .wrapper .login-contain .msg{
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .wrapper .login-contain .msg a{
+        color: #adc1ee
+    }
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
 
 
 

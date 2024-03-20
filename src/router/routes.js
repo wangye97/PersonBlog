@@ -12,17 +12,16 @@ export const StaticRouter= [
         path:'/login',
         component:()=>import('@/pages/Login'),
         meta:{head:false,title:'登录'},
-        beforeEnter(to,from,next){
-            if(from.path=='/'){
-                next()
-            }
-            if(sessionStorage.getItem('isLogin')==1){
-                next(false)
-            }else{
-                next()
-            }
-            
-        }
+        // beforeEnter(to,from,next){
+        //     if(from.path=='/'){
+        //         next()
+        //     }
+        //     if(sessionStorage.getItem('isLogin')==1){
+        //         next(false)
+        //     }else{
+        //         next()
+        //     }
+        // }
     },
     {
         path:'/about',
@@ -65,6 +64,10 @@ export const StaticRouter= [
         path:'/',
         redirect:'/index',
         component:Index,
+<<<<<<< HEAD
+=======
+        //是否显示footer组件
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
         children:[
             {
                 path:'index',
@@ -72,8 +75,20 @@ export const StaticRouter= [
                 meta:{show:false,head:true,isAuto:true},
             }
         ]
+<<<<<<< HEAD
        
+=======
+>>>>>>> d864875619b2ecca46d06f6fbf101fd7042c9708
     },
+   
+    // * 应该是到404模块   path:'/'到首页
+    // {
+    //     path:'*',
+    //     redirect:'/login'
+    // }
+]
+
+export const dynamicRouter =[
     {
         path: '/404',
         component: (resolve) => require(['@/pages/features/404'], resolve),
@@ -89,6 +104,7 @@ export const dynamicRouter=[
     {
         path:'/article',
         component:Article,
+        redirect:'/article/css',
         meta:{show:true,head:true,isAuto:true},
         children:[
             {
