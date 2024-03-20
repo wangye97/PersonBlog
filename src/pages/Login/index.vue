@@ -3,7 +3,7 @@
         <particles></particles>
         <div class="wrapper-contain" ref="contain">
             <div class="wrapper" ref="wrapper">
-                <div class="login-contain login-contain1" v-show="!isShow" >
+                <div class="login-contain login-contain1" v-show="!isShow">
                     <div class="Header">Login</div>
                     <div>
                         <input ref="ipts" type="text" class="input-item" placeholder="username" v-model="user.username">
@@ -21,7 +21,7 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="no-user no-user1" v-show="!isShow" >
+                <div class="no-user no-user1" v-show="!isShow">
                     <div class="user">
                         <h1>没有账号？</h1>
                         <h3>立即注册吧</h3>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="no-user no-user2" v-show="isShow" >
+                <div class="no-user no-user2" v-show="isShow">
                     <div class="user">
                         <h1>已有账号？</h1>
                         <h3>请登录</h3>
@@ -37,13 +37,13 @@
                     </div>
                 </div>
 
-                <div class="login-contain login-contain2" v-show="isShow" >
+                <div class="login-contain login-contain2" v-show="isShow">
                     <div class="Header">SignIn Form</div>
                     <div>
                         <input type="text" class="input-item" placeholder="username" v-model="user.username">
                         <input type="password" class="input-item" placeholder="password" v-model="user.password">
                         <span style="font-size: 20px; position: relative; top: -10px; left: 35px">头像选择</span>
-                        <el-upload class="avatar-uploader" action="http://139.9.197.170:8889/api/uploads"
+                        <el-upload class="avatar-uploader" action="http://127.0.0.1:3006/api/uploads"
                             :show-file-list="false" :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
                             <img v-if="avatar" :src="avatar" class="avatar" />
@@ -96,20 +96,15 @@ export default {
         },
         async login() {
             try {
-                console.log(1);
                 if (this.validation.toLowerCase() == this.values.toLowerCase()) {
                     if (this.user.username != '' && this.user.password != '') {
-                        console.log(2);
                         let result = await this.$store.dispatch('validateLogin', this.user)
-                        console.log(result);
                         if (result.message) {
-                            console.log(1233);
                             this.$message.error(result.message)
                             this.getCode()
                             this.values = ''
                         }
                         if (result.code == 200) {
-                            console.log(123);
                             if (this.user.remember) {
                                 Cookies.set('username', this.user.username, { expires: Config.tokenCookieExpires })
                                 // Cookies.set('password',this.user.password,{expires:Config.tokenCookieExpires})
@@ -156,7 +151,7 @@ export default {
             this.user.remember = Cookies.get('remember')
         },
         getCode() {
-            axios({ url: 'http://127.0.0.1:8889/api/getCode', methods: 'get' })
+            axios({ url: 'http://127.0.0.1:3006/api/getCode', methods: 'get' })
                 .then(res => {
                     this.validation = res.data.text
                     this.$refs.addTag.innerHTML = res.data.data
@@ -165,7 +160,6 @@ export default {
 
         handleAvatarSuccess(res, file) {
             // this.imageUrl = URL.createObjectURL(file.response.path);
-            console.log(res.url);
             this.avatar = res.url
         },
         beforeAvatarUpload(file) {
@@ -181,18 +175,18 @@ export default {
             return isJPG && isLt2M;
         },
         async register() {
-            const { username, password} = this.user
-            const avatar=this.avatar
+            const { username, password } = this.user
+            const avatar = this.avatar
             if (username !== '' && password != '') {
-                let result = await reqRegister({ username, password,avatar })
+                let result = await reqRegister({ username, password, avatar })
                 if (result.data.message) {
                     this.$message.error(result.data.message)
                 } else {
                     result.data.status == 1 ? this.$message(result.data.data) : this.$message.success(result.data.data)
                     if (result.data.status == 0) {
-                        this.isShow = false
-                        this.username = ''
-                        this.password = ''
+                        this.isShow = !this.isShow
+                        this.user.username = ''
+                        this.user.password = ''
                     }
                 }
             } else {
@@ -200,11 +194,11 @@ export default {
             }
         },
 
-        clearUser(){
-            this.isShow=!this.isShow
-            this.user.username=''
-            this.user.password=''
-            this.user.remember=''
+        clearUser() {
+            this.isShow = !this.isShow
+            this.user.username = ''
+            this.user.password = ''
+            this.user.remember = ''
         }
     },
     mounted() {
@@ -241,7 +235,7 @@ export default {
         }
     } */
 .wrapper-contain {
-    overflow: hidden;   
+    overflow: hidden;
     min-height: 100vh;
     width: 100%;
     display: flex;

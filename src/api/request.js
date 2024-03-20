@@ -1,15 +1,15 @@
 import axios from "axios"
 import nProgress from "nprogress"
 import 'nprogress/nprogress.css'
+// const request=axios.create({
+//     baseURL:'http://139.9.197.170:8889/api',
+//     timeout:3000
+// })
+
 const request=axios.create({
-    baseURL:'http://139.9.197.170:8889/api',
-    // baseURL:'/api',
+    baseURL:'http://127.0.0.1:3006/api',
     timeout:3000
 })
-
-// const requests=axios.create({
-//     baseURL:'http://127.0.0.1:8889/api'
-// })
 
 //请求拦截器
 request.interceptors.request.use((config)=>{

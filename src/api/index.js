@@ -40,7 +40,8 @@ export const reqResetPassword=(data)=>request({url:`/reset`,method:'post',data:q
 export const reqGetMoreInfo=()=>request({url:'/more',method:'get'})
 //得到更多组件中的图片
 export const reqGetMoreImg=()=>request({url:'/more/img',method:'get'})
-
+//得到百宝袋中的数据
+export const reqGetTool=()=>request({url:'/tool',method:'get'})
 
 
 

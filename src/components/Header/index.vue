@@ -15,19 +15,24 @@
         <div ref="personInfo" class="right-header transition-box more" style="{height:18px}">
           <div class="fork-left">
             <div class="el-icon-user-solid" @click="showState">
-              <router-link class="active" to="/home">主页</router-link>
+              <a class="active" @click="$router.push('/home')">主页</a>
+              <!-- <router-link class="active" to="/home">主页</router-link> -->
             </div>
             <div class="el-icon-document" @click="showState">
-              <router-link class="active" to="/article/css">知识库</router-link>
+              <a class="active" @click="$router.push('/article/css')">知识库</a>
+              <!-- <router-link class="active" to="/article/css">知识库</router-link> -->
             </div>
             <div class="el-icon-link" @click="showState">
-              <router-link class="active" to="/about">关于</router-link>
+              <a class="active" @click="$router.push('/about')">关于</a>
+              <!-- <router-link class="active" to="/about">关于</router-link> -->
             </div>
             <div class="el-icon-plus" @click="showState">
-              <router-link class="active" to="/about">更多</router-link>
+              <a class="active" @click="$router.push('/more')">更多</a>
+              <!-- <router-link class="active" to="/more">更多</router-link> -->
             </div>
             <div class="el-icon-message" @click="showState">
-              <router-link class="active" to="/message">留言厅</router-link>
+              <a class="active" @click="$router.push('/message')">留言厅</a>
+              <!-- <router-link class="active" to="/message">留言厅</router-link> -->
             </div>
 
             <!-- <div class="resetPassword el-icon-s-help" @click="showState">
@@ -284,6 +289,12 @@ body {
   color: rgb(236, 106, 92);
   font-size: 22px;
   font-family: 隶书;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.right-header .active:hover{
+  color: orange;
 }
 
 

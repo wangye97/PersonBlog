@@ -1,23 +1,23 @@
 <template>
   <div class="contain" style="min-height: 79%; background-color: azure;">
     <div class="carousel">
-      <el-carousel class="max-carousel" :interval="3000" type="card" height="320px" >
+      <!-- <el-carousel class="max-carousel" :interval="3000" type="card" height="320px" >
         <el-carousel-item class="carousel-item" v-for="(item,index) in imgList" :key="index">
             <el-image
                 style="width: 100%;height: 100%"
                 :src="item"
             ></el-image>            
         </el-carousel-item>
-      </el-carousel>
+      </el-carousel> -->
 
-      <el-carousel class="min-carousel" :interval="3000" arrow="always" height="320px" >
+      <!-- <el-carousel class="min-carousel" :interval="3000" arrow="always" height="320px" >
         <el-carousel-item class="carousel-item" v-for="(item,index) in imgList" :key="index">
             <el-image
                 style="width: 100%;height: 100%"
                 :src="item"
             ></el-image>            
         </el-carousel-item>
-      </el-carousel>
+      </el-carousel> -->
     </div>
     <div class="person-introduction" ref="introduction">
         <div class="person-introduction-left">
